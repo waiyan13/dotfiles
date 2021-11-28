@@ -1,0 +1,10 @@
+
+# <type>[scope]:<description>
+#
+# <type> : [bug-fix, build, docs, feat, refactor, format, test]
+# Append ! to type to signal breaking change
+#
+# Commit message, preferable bullet points
+#
+# <footer> : [BREAKING_CHANGE, CLOSES, REF_ISSUES]
+
