@@ -23,6 +23,7 @@ RUN set -xe; \
 	apt-get install -yqq \
 		apt-utils \
     curl \
+    locales \
     software-properties-common
 
 # Git Neovim Pip
@@ -31,7 +32,8 @@ RUN add-apt-repository ppa:git-core/ppa -y && \
   apt-get update -yqq && \
   apt-get install -yqq \
   git \
-  neovim
+  neovim \
+  ripgrep
 
 WORKDIR /home/dev
 
@@ -76,7 +78,10 @@ RUN curl -O https://www.python.org/ftp/python/$PYTHON_DOWNLOAD_VERSION/Python-$P
   cd Python-$PYTHON_DOWNLOAD_VERSION && \
   ./configure --enable-optimizations --with-ensurepip=install && \
   make -j 12 && \
-  make install
+  make install && \
+  cd .. && \
+  rm Python-$PYTHON_DOWNLOAD_VERSION.tgz && \
+  rm -rf Python-$PYTHON_DOWNLOAD_VERSION
 
 # Install Python LDAP
 RUN apt-get update && \
@@ -84,29 +89,6 @@ RUN apt-get update && \
   libldap2-dev \
   libsasl2-dev \
   python-dev
-
-# Remove unnecessary packages
-RUN apt-get purge -yqq \
-  apt-utils \
-  software-properties-common \
-  gcc \
-  make \
-  pkg-config \
-  autoconf \
-  automake \
-  python3-docutils \
-  libseccomp-dev \
-  libjansson-dev \
-  libyaml-dev \
-  libxml2-dev \
-  build-essential \
-  zlib1g-dev \
-  libncurses5-dev \
-  libgdbm-dev \
-  libnss3-dev \
-  libreadline-dev \
-  libffi-dev && \
-  apt-get autoremove -yqq
 
 RUN ln -snf /usr/share/zoneinfo/Asia/Yangon /etc/localtime && echo Asia/Yangon > /etc/timezone
 
@@ -151,11 +133,33 @@ RUN mkdir -p $HOME/app $HOME/.local/share/fonts $HOME/.config/fontconfig/conf.d 
   mv PowerlineSymbols.otf $HOME/.local/share/fonts/ && \
   mv 10-powerline-symbols.conf $HOME/.config/fontconfig/conf.d/
 
-RUN echo "" >> $HOME/.bashrc && \
-  echo "alias cls='cat /dev/null > ~/.bash_history && history -c && clear && reset'\n" >> $HOME/.bashrc && \
-  echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.bashrc
+# Bash
+COPY bash.txt .
+RUN cat bash.txt >> $HOME/.bashrc && \
+  rm bash.txt
 
 USER root
+
+# Remove unnecessary packages
+RUN apt-get purge -yqq \
+  apt-utils \
+  software-properties-common \
+  make \
+  pkg-config \
+  autoconf \
+  automake \
+  python3-docutils \
+  libseccomp-dev \
+  build-essential \
+  zlib1g-dev \
+  libncurses5-dev \
+  libgdbm-dev \
+  libnss3-dev \
+  libreadline-dev \
+  libffi-dev && \
+  apt-get autoremove -yqq
+RUN echo en_US.UTF-8 UTF-8 > /etc/locale.gen && \
+  locale-gen
 
 # Clean up
 RUN apt-get clean && \
