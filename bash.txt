@@ -1,0 +1,10 @@
+
+alias cls='cat /dev/null > ~/.bash_history && history -c && clear && reset'
+
+export PATH=$PATH:$HOME/.local/bin\
+
+# Ripgrep
+if type rg &> /dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files'
+fi
+
