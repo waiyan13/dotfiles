@@ -87,6 +87,9 @@ nmap <F8> :TagbarToggle<CR>
 " Python/PHP tabwidth
 autocmd FileType python,php setlocal shiftwidth=4 tabstop=4 expandtab
 
+" Markdown
+au BufRead, BufNewFile *.md setlocal textwidth=80
+
 let g:python3_host_prog='/usr/local/bin/python3.8'
 
 " LSP config
