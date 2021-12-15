@@ -1,4 +1,5 @@
 [alias]
+  br = branch -a
 	cm = commit -v
 	ck = checkout
 	df = diff
