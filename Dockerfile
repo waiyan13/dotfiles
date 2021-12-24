@@ -26,7 +26,7 @@ RUN set -xe; \
     locales \
     software-properties-common
 
-# Git Neovim Pip
+# Git Neovim Ripgrep
 RUN add-apt-repository ppa:git-core/ppa -y && \
   add-apt-repository ppa:neovim-ppa/stable -y && \
   apt-get update -yqq && \
@@ -73,15 +73,15 @@ RUN apt-get update && \
 ARG PYTHON_VERSION
 ARG PYTHON_DOWNLOAD_VERSION
 
-RUN curl -O https://www.python.org/ftp/python/$PYTHON_DOWNLOAD_VERSION/Python-$PYTHON_DOWNLOAD_VERSION.tgz && \
-  tar xvf Python-$PYTHON_DOWNLOAD_VERSION.tgz && \
-  cd Python-$PYTHON_DOWNLOAD_VERSION && \
+RUN curl -O https://www.python.org/ftp/python/${PYTHON_DOWNLOAD_VERSION}/Python-${PYTHON_DOWNLOAD_VERSION}.tgz && \
+  tar xvf Python-${PYTHON_DOWNLOAD_VERSION}.tgz && \
+  cd Python-${PYTHON_DOWNLOAD_VERSION} && \
   ./configure --enable-optimizations --with-ensurepip=install && \
   make -j 12 && \
   make install && \
   cd .. && \
-  rm Python-$PYTHON_DOWNLOAD_VERSION.tgz && \
-  rm -rf Python-$PYTHON_DOWNLOAD_VERSION
+  rm Python-${PYTHON_DOWNLOAD_VERSION}.tgz && \
+  rm -rf Python-${PYTHON_DOWNLOAD_VERSION}
 
 # Install Python LDAP
 RUN apt-get update && \
@@ -94,17 +94,18 @@ RUN ln -snf /usr/share/zoneinfo/Asia/Yangon /etc/localtime && echo Asia/Yangon >
 
 # Install Node
 USER dev
-ARG NODE_VERSION
 
+WORKDIR /home/dev
+
+ARG NODE_VERSION
 ENV NVM_DIR /home/dev/.nvm
-ENV NODE_VERSION $NODE_VERSION
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
-RUN mkdir -p $NVM_DIR && \
+RUN mkdir -p ${NVM_DIR} && \
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash && \
-  . $NVM_DIR/nvm.sh && \
-  nvm install $NODE_VERSION && \
-  nvm alias default $NODE_VERSION && \
+  . ${NVM_DIR}/nvm.sh && \
+  nvm install ${NODE_VERSION} && \
+  nvm alias default ${NODE_VERSION} && \
   nvm use default
 
 # Dein
@@ -116,15 +117,15 @@ RUN set -xe; \
 
 # Neovim config files
 RUN mkdir -p $HOME/.config/nvim/lua
+
 COPY init.vim /home/dev/.config/nvim/
 COPY lsp-config.lua /home/dev/.config/nvim/lua/
 
-WORKDIR /home/dev
-
 # Language servers
 RUN npm i -g npm@latest neovim pyright vscode-langservers-extracted
-RUN python$PYTHON_VERSION -m pip install --upgrade pip && \
-  python$PYTHON_VERSION -m pip install pynvim
+
+RUN python$PYTHON_VERSION -m pip install --user --upgrade pip && \
+  python$PYTHON_VERSION -m pip install --user pynvim pipenv
 
 # Powerline fonts
 RUN mkdir -p $HOME/app $HOME/.local/share/fonts $HOME/.config/fontconfig/conf.d && \
@@ -134,9 +135,7 @@ RUN mkdir -p $HOME/app $HOME/.local/share/fonts $HOME/.config/fontconfig/conf.d 
   mv 10-powerline-symbols.conf $HOME/.config/fontconfig/conf.d/
 
 # Bash
-COPY bash.txt .
-RUN cat bash.txt >> $HOME/.bashrc && \
-  rm bash.txt
+RUN cat bash.txt >> $HOME/.bashrc
 
 USER root
 
@@ -158,6 +157,8 @@ RUN apt-get purge -yqq \
   libreadline-dev \
   libffi-dev && \
   apt-get autoremove -yqq
+
+# Locale
 RUN echo en_US.UTF-8 UTF-8 > /etc/locale.gen && \
   locale-gen
 
@@ -166,11 +167,9 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm /var/log/lastlog /var/log/faillog
 
-USER dev
+RUN chown -R dev:dev /home/dev/.config/nvim
 
-RUN vim -c ':h hit-enter' \
-  -c 'call dein#install()' \
-  -c 'qa!'
+USER dev
 
 WORKDIR /home/dev/app
 
