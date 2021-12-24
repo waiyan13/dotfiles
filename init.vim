@@ -33,7 +33,6 @@ call dein#add('preservim/nerdtree')
 call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
 call dein#add('vim-airline/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
 call dein#add('vimwiki/vimwiki')
 
 " Required:
@@ -45,14 +44,12 @@ filetype plugin indent on
 syntax enable
 colorscheme afterglow
 
+hi clear pythonInclude
+hi clear pythonFunction
+
 " Custom Mappings
 imap jj <Esc>
 let mapleader="'"
-
-" Remove comment hightlight
-hi clear Comment
-hi clear pythonInclude
-hi clear pythonFunction
 
 " Set absolute and relative line numbers
 set nu rnu
@@ -87,9 +84,6 @@ nmap <F8> :TagbarToggle<CR>
 " Python/PHP tabwidth
 autocmd FileType python,php setlocal shiftwidth=4 tabstop=4 expandtab
 
-" Markdown
-au BufRead, BufNewFile *.md setlocal textwidth=80
-
 let g:python3_host_prog='/usr/local/bin/python3.8'
 
 " LSP config
@@ -107,3 +101,4 @@ function! SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+
