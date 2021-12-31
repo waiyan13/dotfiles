@@ -143,7 +143,7 @@ RUN mkdir -p \
   mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
 
 # Bash
-RUN echo $" \n\
+RUN echo " \n\
 alias cls='cat /dev/null > ~/.bash_history && history -c && clear && reset' \n\
 export PATH=$PATH:$HOME/.local/bin \n\
 if type rg &> /dev/null; then \n\
