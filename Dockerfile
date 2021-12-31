@@ -100,6 +100,7 @@ WORKDIR /home/dev
 ARG NODE_VERSION
 ENV NVM_DIR /home/dev/.nvm
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+ENV HOME /home/dev
 
 RUN mkdir -p ${NVM_DIR} && \
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash && \
@@ -110,32 +111,44 @@ RUN mkdir -p ${NVM_DIR} && \
 
 # Dein
 RUN set -xe; \
-  mkdir -p $HOME/.vim/bundles && \
+  mkdir -p ${HOME}/.vim/bundles && \
   curl -O https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh && \
-  sh ./installer.sh $HOME/.vim/bundles && \
+  sh ./installer.sh ${HOME}/.vim/bundles && \
   rm ./installer.sh
 
 # Neovim config files
-RUN mkdir -p $HOME/.config/nvim/lua
+RUN mkdir -p ${HOME}/.config/nvim/lua
 
-COPY init.vim /home/dev/.config/nvim/
-COPY lsp-config.lua /home/dev/.config/nvim/lua/
+COPY init.vim ${HOME}/.config/nvim/
+COPY lsp-config.lua ${HOME}/.config/nvim/lua/
 
 # Language servers
-RUN npm i -g npm@latest neovim pyright vscode-langservers-extracted
+RUN npm i -g \
+  neovim \
+  npm@latest \
+  pyright \
+  vscode-langservers-extracted
 
 RUN python$PYTHON_VERSION -m pip install --user --upgrade pip && \
   python$PYTHON_VERSION -m pip install --user pynvim pipenv
 
 # Powerline fonts
-RUN mkdir -p $HOME/app $HOME/.local/share/fonts $HOME/.config/fontconfig/conf.d && \
+RUN mkdir -p \
+  ${HOME}/app \
+  ${HOME}/.local/share/fonts \
+  ${HOME}/.config/fontconfig/conf.d && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf && \
   curl -O https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf && \
-  mv PowerlineSymbols.otf $HOME/.local/share/fonts/ && \
-  mv 10-powerline-symbols.conf $HOME/.config/fontconfig/conf.d/
+  mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
+  mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
 
 # Bash
-RUN cat bash.txt >> $HOME/.bashrc
+RUN echo $" \n\
+alias cls='cat /dev/null > ~/.bash_history && history -c && clear && reset' \n\
+export PATH=$PATH:$HOME/.local/bin \n\
+if type rg &> /dev/null; then \n\
+  export FZF_DEFAULT_COMMAND='rg --files' \n\
+fi " >> ${HOME}/.bashrc
 
 USER root
 
@@ -167,9 +180,9 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm /var/log/lastlog /var/log/faillog
 
-RUN chown -R dev:dev /home/dev/.config/nvim
+RUN chown -R dev:dev ${HOME}/.config/nvim
 
 USER dev
 
-WORKDIR /home/dev/app
+WORKDIR ${HOME}/app
 
