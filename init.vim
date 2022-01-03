@@ -74,6 +74,9 @@ endif
 " Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
+"Markdown
+au BufRead,BufNewFile *.md setlocal textwidth=80
+
 " Nerdtree
 map <silent> <C-k>b :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
