@@ -90,7 +90,8 @@ RUN apt-get update && \
   libsasl2-dev \
   python-dev
 
-RUN ln -snf /usr/share/zoneinfo/Asia/Yangon /etc/localtime && echo Asia/Yangon > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/Asia/Yangon /etc/localtime && \
+  echo Asia/Yangon > /etc/timezone
 
 # Install Node
 USER dev
@@ -117,10 +118,14 @@ RUN set -xe; \
   rm ./installer.sh
 
 # Neovim config files
-RUN mkdir -p ${HOME}/.config/nvim/lua
+RUN mkdir -p \
+  ${HOME}/.config/nvim/lua \
+  ${HOME}/.config/nvim/syntax && \
+  curl http://www.vim.org/scripts/download_script.php?src_id=19394 -o ${HOME}/.config/nvim/syntax/nginx.vim
 
 COPY init.vim ${HOME}/.config/nvim/
 COPY lsp-config.lua ${HOME}/.config/nvim/lua/
+COPY lsp-cmp.lua ${HOME}/.config/nvim/lua/
 
 # Language servers
 RUN npm i -g \

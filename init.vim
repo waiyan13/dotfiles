@@ -22,16 +22,21 @@ endif
 "call dein#add('Shougo/neosnippet-snippets')
 call dein#add('airblade/vim-gitgutter')
 call dein#add('danilo-augusto/vim-afterglow')
+call dein#add('hrsh7th/cmp-nvim-lsp')
+call dein#add('hrsh7th/nvim-cmp')
 call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
 call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+call dein#add('L3MON4D3/LuaSnip')
 call dein#add('majutsushi/tagbar')
 call dein#add('MaxMEllon/vim-jsx-pretty')
 call dein#add('neovim/nvim-lspconfig')
 call dein#add('pangloss/vim-javascript')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('preservim/nerdtree')
+call dein#add('saadparwaiz1/cmp_luasnip')
 call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
+call dein#add('typescript-language-server/typescript-language-server')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vimwiki/vimwiki')
 
@@ -91,6 +96,7 @@ let g:python3_host_prog='/usr/local/bin/python3.8'
 
 " LSP config
 lua require('lsp-config')
+lua require('lsp-cmp')
 
 " Vimwiki
 let g:vimwiki_global_ext = 0
