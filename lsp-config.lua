@@ -1,5 +1,8 @@
 local nvim_lsp = require('lspconfig')
 
+-- Setup lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -34,25 +37,31 @@ local on_attach = function(client, bufnr)
 end
 
 nvim_lsp.eslint.setup{
+  capabilities = capabilities,
   on_attach = on_attach,
   flags = {
     debounce_text_changes = 150,
-  }
+  },
   settings = {
-    nodePath = '/home/dev/.nvm/versions/v17.3.0/bin'
+    nodePath = '/home/dev/.nvm/versions/v17.3.1/bin'
   }
 }
 
 nvim_lsp.pyright.setup{
+  capabilities = capabilities,
   on_attach = on_attach,
   settings = {
     python = {
-      pythonPath = '/usr/local/bin/python3.9'
+      analysis = {
+        extraPaths = { '/home/dev/app/.venv/lib/python3.8/site-packages' }
+      },
+      pythonPath = '/home/dev/app/.venv/bin/python',
     }
   }
 }
 
 nvim_lsp.tsserver.setup{
+  capabilities = capabilities,
   on_attach = on_attach,
   flags = {
     debounce_text_changes = 150,

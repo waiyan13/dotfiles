@@ -62,6 +62,7 @@ RUN git clone https://github.com/universal-ctags/ctags.git && \
 RUN apt-get update && \
   apt-get install -yqq \
   build-essential \
+  python3-distutils \
   zlib1g-dev \
   libncurses5-dev \
   libgdbm-dev \
@@ -69,19 +70,6 @@ RUN apt-get update && \
   libssl-dev \
   libreadline-dev \
   libffi-dev
-
-ARG PYTHON_VERSION
-ARG PYTHON_DOWNLOAD_VERSION
-
-RUN curl -O https://www.python.org/ftp/python/${PYTHON_DOWNLOAD_VERSION}/Python-${PYTHON_DOWNLOAD_VERSION}.tgz && \
-  tar xvf Python-${PYTHON_DOWNLOAD_VERSION}.tgz && \
-  cd Python-${PYTHON_DOWNLOAD_VERSION} && \
-  ./configure --enable-optimizations --with-ensurepip=install && \
-  make -j 12 && \
-  make install && \
-  cd .. && \
-  rm Python-${PYTHON_DOWNLOAD_VERSION}.tgz && \
-  rm -rf Python-${PYTHON_DOWNLOAD_VERSION}
 
 # Install Python LDAP
 RUN apt-get update && \
@@ -123,19 +111,17 @@ RUN mkdir -p \
   ${HOME}/.config/nvim/syntax && \
   curl http://www.vim.org/scripts/download_script.php?src_id=19394 -o ${HOME}/.config/nvim/syntax/nginx.vim
 
-COPY init.vim ${HOME}/.config/nvim/
-COPY lsp-config.lua ${HOME}/.config/nvim/lua/
-COPY lsp-cmp.lua ${HOME}/.config/nvim/lua/
+COPY nvim ${HOME}/.config/nvim/
+COPY lua ${HOME}/.config/nvim/lua/
 
 # Language servers
 RUN npm i -g \
   neovim \
   npm@latest \
   pyright \
+  typescript \
+  typescript-language-server \
   vscode-langservers-extracted
-
-RUN python$PYTHON_VERSION -m pip install --user --upgrade pip && \
-  python$PYTHON_VERSION -m pip install --user pynvim pipenv
 
 # Powerline fonts
 RUN mkdir -p \
@@ -147,10 +133,19 @@ RUN mkdir -p \
   mv PowerlineSymbols.otf ${HOME}/.local/share/fonts/ && \
   mv 10-powerline-symbols.conf ${HOME}/.config/fontconfig/conf.d/
 
+# pyenv
+RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+
+# Pip
+RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+  python3 get-pip.py && \
+  python3 -m pip install --upgrade pip && \
+  rm get-pip.py
+
 # Bash
 RUN echo " \n\
 alias cls='cat /dev/null > ~/.bash_history && history -c && clear && reset' \n\
-export PATH=$PATH:$HOME/.local/bin \n\
+export PATH=/home/dev/.pyenv/bin:$PATH:$HOME/.local/bin \n\
 if type rg &> /dev/null; then \n\
   export FZF_DEFAULT_COMMAND='rg --files' \n\
 fi " >> ${HOME}/.bashrc
@@ -161,24 +156,15 @@ USER root
 RUN apt-get purge -yqq \
   apt-utils \
   software-properties-common \
-  make \
   pkg-config \
   autoconf \
   automake \
   python3-docutils \
-  libseccomp-dev \
-  build-essential \
-  zlib1g-dev \
-  libncurses5-dev \
-  libgdbm-dev \
-  libnss3-dev \
-  libreadline-dev \
-  libffi-dev && \
+  libseccomp-dev && \
   apt-get autoremove -yqq
 
 # Locale
-RUN echo en_US.UTF-8 UTF-8 > /etc/locale.gen && \
-  locale-gen
+RUN update-locale LANG=LANG=en_US.UTF-8 LANGUAGE
 
 # Clean up
 RUN apt-get clean && \

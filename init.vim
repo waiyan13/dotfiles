@@ -21,7 +21,6 @@ endif
 "call dein#add('Shougo/neosnippet.vim')
 "call dein#add('Shougo/neosnippet-snippets')
 call dein#add('airblade/vim-gitgutter')
-call dein#add('danilo-augusto/vim-afterglow')
 call dein#add('hrsh7th/cmp-buffer')
 call dein#add('hrsh7th/cmp-cmdline')
 call dein#add('hrsh7th/cmp-nvim-lsp')
@@ -31,11 +30,14 @@ call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
 call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 call dein#add('kyazdani42/nvim-tree.lua')
 call dein#add('L3MON4D3/LuaSnip')
+call dein#add('lukas-reineke/indent-blankline.nvim')
 call dein#add('majutsushi/tagbar')
 call dein#add('MaxMEllon/vim-jsx-pretty')
 call dein#add('neovim/nvim-lspconfig')
+call dein#add('NLKNguyen/papercolor-theme')
 call dein#add('pangloss/vim-javascript')
 call dein#add('plasticboy/vim-markdown')
+call dein#add('Pocco81/TrueZen.nvim')
 call dein#add('saadparwaiz1/cmp_luasnip')
 call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
@@ -48,12 +50,15 @@ call dein#end()
 
 " Required:
 set encoding=utf-8
+set t_Co=256
+set termguicolors
+set bg=light
 filetype plugin indent on
 syntax enable
-colorscheme afterglow
+colorscheme PaperColor
 
-hi clear pythonInclude
-hi clear pythonFunction
+"hi clear pythonInclude
+"hi clear pythonFunction
 
 " Custom Mappings
 imap jj <Esc>
@@ -87,7 +92,14 @@ au BufRead,BufNewFile *.md setlocal textwidth=80
 
 " nvim-tree
 source /home/dev/.config/nvim/nvim-tree.vim
-lua require('nvim-tree').setup({})
+lua require('nvim_tree')
+
+" Indent blank line
+lua require('indent-blankline')
+
+" LSP config
+lua require('lsp-config')
+lua require('lsp-cmp')
 
 "Vim tagbar
 nmap <F8> :TagbarToggle<CR>
@@ -95,14 +107,8 @@ nmap <F8> :TagbarToggle<CR>
 " Python/PHP tabwidth
 autocmd FileType python,php setlocal shiftwidth=4 tabstop=4 expandtab
 
-let g:python3_host_prog='/usr/local/bin/python3.8'
-
 " nvm-cmp
 set completeopt=menu,menuone,noselect
-
-" LSP config
-lua require('lsp-config')
-lua require('lsp-cmp')
 
 " Vimwiki
 let g:vimwiki_global_ext = 0
