@@ -101,6 +101,9 @@ lua require('indent-blankline')
 lua require('lsp-config')
 lua require('lsp-cmp')
 
+" TrueZen
+lua require('true_zen')
+
 "Vim tagbar
 nmap <F8> :TagbarToggle<CR>
 
