@@ -28,7 +28,6 @@ call dein#add('hrsh7th/cmp-path')
 call dein#add('hrsh7th/nvim-cmp')
 call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
 call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-call dein#add('kyazdani42/nvim-tree.lua')
 call dein#add('L3MON4D3/LuaSnip')
 call dein#add('lukas-reineke/indent-blankline.nvim')
 call dein#add('majutsushi/tagbar')
@@ -48,17 +47,19 @@ call dein#add('vimwiki/vimwiki')
 " Required:
 call dein#end()
 
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+" call dein#install()
+"endif
+
 " Required:
 set encoding=utf-8
 set t_Co=256
 set termguicolors
-set bg=light
+set bg=dark
 filetype plugin indent on
 syntax enable
 colorscheme PaperColor
-
-"hi clear pythonInclude
-"hi clear pythonFunction
 
 " Custom Mappings
 imap jj <Esc>
@@ -72,28 +73,28 @@ set expandtab
 set tabstop=2
 " Set indent space to 2
 set shiftwidth=2
-
-" Vim airline
-let g:airline_powerline_fonts=1
-if !exists('g:airline_symbols')
-  let g:airline_symbols={}
-endif
-
-" If you want to install not installed plugins on startup.
-"if dein#check_install()
-" call dein#install()
-"endif
-
 " Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
+let g:netrw_liststyle=3
+let g:netrw_banner =0
+let g:netrw_browse_split=3
+let g:netrw_winsize=15
+augroup ProjectDrawer
+  autocmd!
+  autocmd VimEnter * :Vexplore
+augroup END
 
 "Markdown
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
-" nvim-tree
-source /home/dev/.config/nvim/nvim-tree.vim
-lua require('nvim_tree')
-autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
+" Python/PHP tabwidth
+autocmd FileType python,php setlocal shiftwidth=4 tabstop=4 expandtab
+
+" vimwiki
+let g:vimwiki_global_ext = 0
+let g:vimwiki_list=[{ 'path' : '$HOME/app',
+  \ 'syntax' : 'markdown', 'ext' : '.md' }]
 
 " Indent blank line
 lua require('indent-blankline')
@@ -105,16 +106,8 @@ lua require('lsp-cmp')
 "Vim tagbar
 nmap <F8> :TagbarToggle<CR>
 
-" Python/PHP tabwidth
-autocmd FileType python,php setlocal shiftwidth=4 tabstop=4 expandtab
-
-" nvm-cmp
-set completeopt=menu,menuone,noselect
-
-" Vimwiki
-let g:vimwiki_global_ext = 0
-let g:vimwiki_list=[{ 'path' : '$HOME/app',
-  \ 'syntax' : 'markdown', 'ext' : '.md' }]
+" netrw
+nnoremap <C-n> :Vexplore<CR>
 
 " Check syntax group
 function! SynStack()
