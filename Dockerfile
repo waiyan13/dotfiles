@@ -13,22 +13,22 @@ ARG PGID=1000
 ENV PGID ${PGID}
 
 RUN set -xe; \
-	groupadd -g ${PGID} dev && \
-	useradd -l -u ${PUID} -g dev -m dev && \
-	usermod -p "*" dev -s /bin/bash
+  groupadd -g ${PGID} dev && \
+  useradd -l -u ${PUID} -g dev -m dev && \
+  usermod -p "*" dev -s /bin/bash
 
 # Update & install packages
 RUN set -xe; \
   apt-get update -yqq && \
-	apt-get install -yqq \
-		apt-utils \
-    curl \
-    locales \
-    software-properties-common
+  apt-get install -yqq \
+  apt-utils \
+  curl \
+  locales \
+  software-properties-common
 
 # Git Neovim Ripgrep
 RUN add-apt-repository ppa:git-core/ppa -y && \
-  add-apt-repository ppa:neovim-ppa/stable -y && \
+  add-apt-repository ppa:neovim-ppa/unstable -y && \
   apt-get update -yqq && \
   apt-get install -yqq \
   git \
@@ -76,7 +76,7 @@ RUN apt-get update && \
   apt-get install -yqq \
   libldap2-dev \
   libsasl2-dev \
-  python-dev
+  python3-dev
 
 RUN ln -snf /usr/share/zoneinfo/Asia/Yangon /etc/localtime && \
   echo Asia/Yangon > /etc/timezone
@@ -164,7 +164,8 @@ RUN apt-get purge -yqq \
   apt-get autoremove -yqq
 
 # Locale
-RUN update-locale LANG=LANG=en_US.UTF-8 LANGUAGE
+RUN locale-gen en_US.UTF-8
+RUN update-locale LANG=en_US.UTF-8
 
 # Clean up
 RUN apt-get clean && \

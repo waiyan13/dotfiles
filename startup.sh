@@ -12,5 +12,5 @@ docker run \
   --name dev_$1 \
   --network host \
   --hostname $1 \
-  dev:latest
+  dev_env:latest
 
