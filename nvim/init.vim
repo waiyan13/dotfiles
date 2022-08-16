@@ -20,28 +20,49 @@ endif
 " Add or remove your plugins here like this:
 "call dein#add('Shougo/neosnippet.vim')
 "call dein#add('Shougo/neosnippet-snippets')
+
+" Git related
 call dein#add('airblade/vim-gitgutter')
+call dein#add('tpope/vim-fugitive')
+
+" Autocomplete related
 call dein#add('hrsh7th/cmp-buffer')
 call dein#add('hrsh7th/cmp-cmdline')
 call dein#add('hrsh7th/cmp-nvim-lsp')
 call dein#add('hrsh7th/cmp-path')
 call dein#add('hrsh7th/nvim-cmp')
+call dein#add('L3MON4D3/LuaSnip')
+call dein#add('neovim/nvim-lspconfig')
+call dein#add('saadparwaiz1/cmp_luasnip')
+
+" Grep related
 call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
 call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-call dein#add('L3MON4D3/LuaSnip')
+
+" Formatting related
 call dein#add('lukas-reineke/indent-blankline.nvim')
-call dein#add('majutsushi/tagbar')
+call dein#add('tpope/vim-surround')
+
+" Syntax related
 call dein#add('MaxMEllon/vim-jsx-pretty')
-call dein#add('neovim/nvim-lspconfig')
 call dein#add('pangloss/vim-javascript')
 call dein#add('plasticboy/vim-markdown')
-call dein#add('Pocco81/TrueZen.nvim')
-call dein#add('saadparwaiz1/cmp_luasnip')
-call dein#add('tpope/vim-fugitive')
-call dein#add('tpope/vim-surround')
 call dein#add('typescript-language-server/typescript-language-server')
+
+" Micellaneous
+call dein#add('majutsushi/tagbar')
+call dein#add('Pocco81/TrueZen.nvim')
 call dein#add('vim-airline/vim-airline')
-# call dein#add('vimwiki/vimwiki')
+" call dein#add('vimwiki/vimwiki')
+
+" Colorschemes
+call dein#add('ajgrf/parchment')
+call dein#add('huyvohcmc/atlas.vim')
+call dein#add('KKPMW/distilled-vim')
+call dein#add('plan9-for-vimspace/acme-colors')
+call dein#add('owickstrom/vim-colors-paramount')
+call dein#add('reedes/vim-colors-pencil')
+call dein#add('t184256/vim-boring')
 
 " Required:
 call dein#end()
@@ -58,10 +79,16 @@ set termguicolors
 set bg=dark
 filetype plugin indent on
 syntax enable
+colorscheme parchment
 
 " Custom Mappings
 imap jj <Esc>
 let mapleader="'"
+
+" Colorscheme tweak
+" hi pythonFunction guifg=#d2a8ff
+hi pythonFunction guifg=#b875ff
+hi clear pythonComment
 
 " Set absolute and relative line numbers
 set nu rnu
