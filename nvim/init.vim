@@ -33,7 +33,6 @@ call dein#add('lukas-reineke/indent-blankline.nvim')
 call dein#add('majutsushi/tagbar')
 call dein#add('MaxMEllon/vim-jsx-pretty')
 call dein#add('neovim/nvim-lspconfig')
-call dein#add('NLKNguyen/papercolor-theme')
 call dein#add('pangloss/vim-javascript')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('Pocco81/TrueZen.nvim')
@@ -42,7 +41,7 @@ call dein#add('tpope/vim-fugitive')
 call dein#add('tpope/vim-surround')
 call dein#add('typescript-language-server/typescript-language-server')
 call dein#add('vim-airline/vim-airline')
-call dein#add('vimwiki/vimwiki')
+# call dein#add('vimwiki/vimwiki')
 
 " Required:
 call dein#end()
@@ -59,7 +58,6 @@ set termguicolors
 set bg=dark
 filetype plugin indent on
 syntax enable
-colorscheme PaperColor
 
 " Custom Mappings
 imap jj <Esc>
@@ -92,9 +90,9 @@ au BufRead,BufNewFile *.md setlocal textwidth=80
 autocmd FileType python,php setlocal shiftwidth=4 tabstop=4 expandtab
 
 " vimwiki
-let g:vimwiki_global_ext = 0
-let g:vimwiki_list=[{ 'path' : '$HOME/app',
-  \ 'syntax' : 'markdown', 'ext' : '.md' }]
+" let g:vimwiki_global_ext = 0
+" let g:vimwiki_list=[{ 'path' : '$HOME/app',
+"   \ 'syntax' : 'markdown', 'ext' : '.md' }]
 
 " Indent blank line
 lua require('indent-blankline')
