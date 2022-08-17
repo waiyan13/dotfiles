@@ -15,12 +15,12 @@ ARG TZ=UTC
 ENV TZ=${TZ}
 
 RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
-
 # Install essentials
 RUN set -xe; \
   apt-get update -y && \
   apt-get install -y \
     curl \
+    ripgrep \
     software-properties-common
 
 # Install Neovim Git

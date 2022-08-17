@@ -50,7 +50,6 @@ call dein#add('plasticboy/vim-markdown')
 call dein#add('typescript-language-server/typescript-language-server')
 
 " Micellaneous
-call dein#add('majutsushi/tagbar')
 call dein#add('Pocco81/TrueZen.nvim')
 call dein#add('vim-airline/vim-airline')
 " call dein#add('vimwiki/vimwiki')
@@ -127,9 +126,6 @@ lua require('indent-blankline')
 " LSP config
 lua require('lsp-config')
 lua require('lsp-cmp')
-
-"Vim tagbar
-nmap <F8> :TagbarToggle<CR>
 
 " netrw
 nnoremap <C-n> :Vexplore<CR>
