@@ -1,25 +1,25 @@
 # To Install
 
-[ ] System update
-[ ] flatpak
-[ ] Chromium
-[ ] Firefox
-[ ] Bitwarden
-[ ] VSCode
-[ ] Uninstall Snap applications
-[ ] Remove Snap
-[ ] git
-[ ] nvim
-[ ] dein
-[ ] Setup SSH
-[ ] Kitty
-[ ] Zsh
-[ ] Oh My Zsh
-[ ] Fonts
-[ ] Starship
-[ ] Chroma
-[ ] mkcert
-[ ] pass
-[ ] Docker
-[ ] nvm
-[ ] git-split-diffs
+- [ ] System update
+- [ ] flatpak
+- [ ] Chromium
+- [ ] Firefox
+- [ ] Bitwarden
+- [ ] VSCode
+- [ ] Uninstall Snap applications
+- [ ] Remove Snap
+- [ ] git
+- [ ] nvim
+- [ ] dein
+- [ ] Setup SSH
+- [ ] Kitty
+- [ ] Zsh
+- [ ] Oh My Zsh
+- [ ] Fonts
+- [ ] Starship
+- [ ] Chroma
+- [ ] mkcert
+- [ ] pass
+- [ ] Docker
+- [ ] nvm
+- [ ] git-split-diffs
