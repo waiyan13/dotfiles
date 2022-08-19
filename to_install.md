@@ -21,5 +21,6 @@
 - [ ] mkcert
 - [ ] pass
 - [ ] Docker
+- [ ] docker-credential-helpers
 - [ ] nvm
 - [ ] git-split-diffs
