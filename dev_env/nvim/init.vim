@@ -36,12 +36,16 @@ call dein#add('neovim/nvim-lspconfig')
 call dein#add('saadparwaiz1/cmp_luasnip')
 
 " Grep related
-call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
+call dein#add('junegunn/fzf', { 'do': { -> fzf#install() } }) 
 call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
 
 " Formatting related
 call dein#add('lukas-reineke/indent-blankline.nvim')
 call dein#add('tpope/vim-surround')
+
+" File explorer
+call dein#add('kyazdani42/nvim-web-devicons')
+call dein#add('kyazdani42/nvim-tree.lua')
 
 " Syntax related
 call dein#add('MaxMEllon/vim-jsx-pretty')
@@ -94,7 +98,7 @@ set termguicolors
 set bg=dark
 filetype plugin indent on
 syntax enable
-colorscheme parchment
+colorscheme boring
 
 " Custom Mappings
 imap jj <Esc>
@@ -116,14 +120,14 @@ set shiftwidth=2
 " Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
-let g:netrw_liststyle=3
-let g:netrw_banner =0
-let g:netrw_browse_split=3
-let g:netrw_winsize=15
-augroup ProjectDrawer
-  autocmd!
-  autocmd VimEnter * :Vexplore
-augroup END
+" let g:netrw_liststyle=3
+" let g:netrw_banner =0
+" let g:netrw_browse_split=3
+" let g:netrw_winsize=15
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
 
 "Markdown
 au BufRead,BufNewFile *.md setlocal textwidth=80
@@ -143,8 +147,12 @@ lua require('indent-blankline')
 lua require('lsp-config')
 lua require('lsp-cmp')
 
+" Nvim tree
+lua require('nvim-tree').setup()
+nnoremap <C-n> :NvimTreeToggle
+
 " netrw
-nnoremap <C-n> :Vexplore<CR>
+" nnoremap <C-n> :Vexplore<CR>
 
 " Check syntax group
 function! SynStack()
@@ -153,4 +161,3 @@ function! SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-
