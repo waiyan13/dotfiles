@@ -21,7 +21,10 @@ RUN set -xe; \
   apt-get install -y \
     curl \
     ripgrep \
-    software-properties-common
+    software-properties-common \
+    zsh && \
+  chsh -s $(which zsh) && \
+  sh -c "$(curl -fsSL https://starship.rs/install.sh)" -y -f
 
 # Install Neovim Git
 RUN set -xe; \
@@ -33,18 +36,18 @@ RUN set -xe; \
     git
 
 # Python build dependencies
-RUN set -xe; \
-  apt-get update -y && \
-  apt-get install -y \
-    build-essential \
-    libncurses5-dev \
-    libgdbm-dev \
-    libnss3-dev \
-    libsqlite3-dev \
-    libssl-dev \
-    libreadline-dev \
-    libffi-dev \
-    zlib1g-dev
+# RUN set -xe; \
+#   apt-get update -y && \
+#   apt-get install -y \
+#     build-essential \
+#     libncurses5-dev \
+#     libgdbm-dev \
+#     libnss3-dev \
+#     libsqlite3-dev \
+#     libssl-dev \
+#     libreadline-dev \
+#     libffi-dev \
+#     zlib1g-dev
 
 # Install Python LDAP
 RUN set -xe; \
@@ -65,6 +68,7 @@ RUN groupadd --gid ${PGID} dev && \
     dev
 
 ENV HOME=/home/dev
+ENV ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
 
 # Set system environment variables
 ENV LANG=C.UTF-8 \
@@ -76,23 +80,17 @@ USER dev
 
 WORKDIR ${HOME}
 
-COPY bash.txt ${HOME}/
-COPY profile.txt ${HOME}/
-
-# Install Pyenv
+# Setup zsh
 RUN set -xe; \
-  curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash && \
-  cat ${HOME}/bash.txt >> ${HOME}/.bashrc && \
-  cat ${HOME}/profile.txt >> ${HOME}/.profile && \
-  rm ${HOME}/bash.txt ${HOME}/profile.txt
+  mkdir -p ${HOME}/${ZSH_CUSTOM}/plugins && \
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+
+COPY .zshrc ${HOME}/
 
 # Install nvm
 RUN set -xe; \
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-
-# Install Poetry
-RUN set -xe; \
-  curl -sSL https://install.python-poetry.org | python3 -
 
 # Install Dein
 RUN set -xe; \
@@ -107,6 +105,7 @@ RUN set -xe; \
 
 COPY nvim ${HOME}/.config/nvim/
 COPY lua ${HOME}/.config/nvim/lua/
+COPY starship.toml ${HOME}/.config
 
 # Language servers
 RUN export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && \
