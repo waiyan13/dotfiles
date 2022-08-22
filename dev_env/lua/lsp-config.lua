@@ -43,7 +43,7 @@ nvim_lsp.eslint.setup{
     debounce_text_changes = 150,
   },
   settings = {
-    nodePath = '/home/dev/.nvm/versions/v17.3.1/bin'
+    nodePath = '/home/dev/.nvm/versions/v18.7.0/bin'
   }
 }
 
