@@ -120,15 +120,6 @@ set shiftwidth=2
 " Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
-" let g:netrw_liststyle=3
-" let g:netrw_banner =0
-" let g:netrw_browse_split=3
-" let g:netrw_winsize=15
-" augroup ProjectDrawer
-"   autocmd!
-"   autocmd VimEnter * :Vexplore
-" augroup END
-
 "Markdown
 au BufRead,BufNewFile *.md setlocal textwidth=80
 
@@ -150,9 +141,6 @@ lua require('lsp-cmp')
 " Nvim tree
 lua require('nvim-tree').setup()
 nnoremap <C-n> :NvimTreeToggle
-
-" netrw
-" nnoremap <C-n> :Vexplore<CR>
 
 " Check syntax group
 function! SynStack()
