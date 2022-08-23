@@ -139,7 +139,7 @@ lua require('lsp-config')
 lua require('lsp-cmp')
 
 " Nvim tree
-lua require('nvim-tree').setup()
+lua require('nvim_tree')
 nnoremap <C-n> :NvimTreeToggle
 
 " Check syntax group
