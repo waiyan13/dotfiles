@@ -59,29 +59,12 @@ call dein#add('vim-airline/vim-airline')
 " call dein#add('vimwiki/vimwiki')
 
 " Colorschemes
-call dein#add('aditya-azad/candle-grey')
-call dein#add('ajgrf/parchment')
-call dein#add('Alvarocz/vim-northpole')
 call dein#add('ayu-theme/ayu-vim')
-call dein#add('bluz71/vim-moonfly-colors')
-call dein#add('chriskempson/vim-tomorrow-theme')
-call dein#add('daviddosomething/vim-colors-meh')
 call dein#add('fenetikm/falcon')
-call dein#add('fxn/vim-monochrome')
-call dein#add('goatslacker/mango.vim')
-call dein#add('huyvohcmc/atlas.vim')
-call dein#add('kkga/vim-envy')
-call dein#add('KKPMW/distilled-vim')
-call dein#add('ldelossa/vimdark')
+call dein#add('lifepillar/vim-solarized8')
 call dein#add('morhetz/gruvbox')
 call dein#add('nanotech/jellybeans.vim')
-call dein#add('noahfrederick/vim-hemisu')
-call dein#add('pineapplegiant/spaceduck')
-call dein#add('owickstrom/vim-colors-paramount')
-call dein#add('robertmeta/nofrils')
-call dein#add('reedes/vim-colors-pencil')
 call dein#add('t184256/vim-boring')
-call dein#add('zefei/cake16')
 
 " Required:
 call dein#end()
@@ -106,8 +89,8 @@ let mapleader="'"
 
 " Colorscheme tweak
 " hi pythonFunction guifg=#d2a8ff
-hi pythonFunction guifg=#b875ff
-hi clear pythonComment
+" hi pythonFunction guifg=#b875ff
+" hi clear pythonComment
 
 " Set absolute and relative line numbers
 set nu rnu
@@ -120,8 +103,11 @@ set shiftwidth=2
 " Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
-"Markdown
+" Markdown
 au BufRead,BufNewFile *.md setlocal textwidth=80
+
+" Python
+au BufRead,BufNewFile *.py setlocal textwidth=88
 
 " Python/PHP tabwidth
 autocmd FileType python,php setlocal shiftwidth=4 tabstop=4 expandtab
