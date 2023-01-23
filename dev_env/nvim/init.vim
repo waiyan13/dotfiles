@@ -4,8 +4,24 @@ endif
 
 " Required:
 " Add the dein installation directory into runtimepath
-set runtimepath+=~/.vim/bundles/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.vim/bundles/repos/github.com/Shougo
 set runtimepath+=~/.vim/bundles/repos/github.com/junegunn/fzf
+
+let $CACHE = expand('~/.vim/bundles')
+if !isdirectory($CACHE)
+  call mkdir($CACHE, 'p')
+endif
+if &runtimepath !~# '/dein.vim'
+  let s:dein_dir = fnamemodify('dein.vim', ':p')
+  if !isdirectory(s:dein_dir)
+    let s:dein_dir = $CACHE . '/repos/github.com/Shougo/dein.vim'
+    if !isdirectory(s:dein_dir)
+      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+    endif
+  endif
+  execute 'set runtimepath^=' . substitute(
+        \ fnamemodify(s:dein_dir, ':p') , '[/\\]$', '', '')
+endif
 
 " Required:
 call dein#begin('~/.vim/bundles')
@@ -26,6 +42,7 @@ call dein#add('airblade/vim-gitgutter')
 call dein#add('tpope/vim-fugitive')
 
 " Autocomplete related
+call dein#add('folke/lsp-colors.nvim')
 call dein#add('hrsh7th/cmp-buffer')
 call dein#add('hrsh7th/cmp-cmdline')
 call dein#add('hrsh7th/cmp-nvim-lsp')
@@ -33,6 +50,7 @@ call dein#add('hrsh7th/cmp-path')
 call dein#add('hrsh7th/nvim-cmp')
 call dein#add('L3MON4D3/LuaSnip')
 call dein#add('neovim/nvim-lspconfig')
+call dein#add('onsails/lspkind.nvim')
 call dein#add('saadparwaiz1/cmp_luasnip')
 
 " Grep related
@@ -60,10 +78,14 @@ call dein#add('vim-airline/vim-airline')
 
 " Colorschemes
 call dein#add('ayu-theme/ayu-vim')
+call dein#add('cocopon/iceberg.vim')
 call dein#add('fenetikm/falcon')
+call dein#add('ghifarit53/tokyonight-vim')
 call dein#add('lifepillar/vim-solarized8')
 call dein#add('morhetz/gruvbox')
 call dein#add('nanotech/jellybeans.vim')
+call dein#add('rebelot/kanagawa.nvim')
+call dein#add('sainnhe/edge')
 call dein#add('t184256/vim-boring')
 
 " Required:
@@ -81,7 +103,7 @@ set termguicolors
 set bg=dark
 filetype plugin indent on
 syntax enable
-colorscheme boring
+colorscheme iceberg
 
 " Custom Mappings
 imap jj <Esc>
@@ -123,6 +145,7 @@ lua require('indent-blankline')
 " LSP config
 lua require('lsp-config')
 lua require('lsp-cmp')
+lua require('diagnostics')
 
 " Nvim tree
 lua require('nvim_tree')
