@@ -72,7 +72,7 @@ zstyle ':omz:update' frequency 7
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(colorize common-aliases docker docker-compose git ssh-agent)
+plugins=(colorize common-aliases docker docker-compose git ssh-agent ubuntu)
 
 zstyle :omz:plugins:ssh-agent identities github frontiir
 
@@ -104,3 +104,8 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cls="cat /dev/null > ~/.zsh_history && history -c && reset"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+eval "$(starship init zsh)"
