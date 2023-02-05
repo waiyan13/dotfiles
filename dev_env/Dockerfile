@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM debian:11-slim AS installer
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -10,53 +10,6 @@ ENV PUID=${PUID}
 ARG PGID=1000
 ENV PGID=${PGID}
 
-# Set timezone
-ARG TZ=UTC
-ENV TZ=${TZ}
-
-RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
-# Install essentials
-RUN set -xe; \
-  apt-get update -y && \
-  apt-get install -y \
-    curl \
-    ripgrep \
-    software-properties-common \
-    zsh && \
-  chsh -s $(which zsh) && \
-  sh -c "$(curl -fsSL https://starship.rs/install.sh)" -y -f
-
-# Install Neovim Git
-RUN set -xe; \
-  add-apt-repository ppa:neovim-ppa/unstable -y && \
-  add-apt-repository ppa:git-core/ppa -y && \
-  apt-get update -y && \
-  apt-get install -y \
-    neovim \
-    git
-
-# Python build dependencies
-# RUN set -xe; \
-#   apt-get update -y && \
-#   apt-get install -y \
-#     build-essential \
-#     libncurses5-dev \
-#     libgdbm-dev \
-#     libnss3-dev \
-#     libsqlite3-dev \
-#     libssl-dev \
-#     libreadline-dev \
-#     libffi-dev \
-#     zlib1g-dev
-
-# Install Python LDAP
-RUN set -xe; \
-  apt-get update -y && \
-  apt-get install -y \
-  libldap2-dev \
-  libsasl2-dev \
-  python3-dev
-
 # Create user
 RUN groupadd --gid ${PGID} dev && \
   useradd \
@@ -67,14 +20,16 @@ RUN groupadd --gid ${PGID} dev && \
     --gid dev \
     dev
 
+# Install Neovim Git
+RUN set -xe; \
+  apt-get update -y && \
+  apt-get install -y \
+    curl \
+    git \
+    zsh
+
 ENV HOME=/home/dev
 ENV ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
-
-# Set system environment variables
-ENV LANG=C.UTF-8 \
-  LC_ALL=C.UTF-8 \
-  PYTHONDONTWRITEBYTECODE=1 \
-  PYTHONFAULTHANDLER=1
 
 USER dev
 
@@ -86,40 +41,99 @@ RUN set -xe; \
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
 
-COPY .zshrc ${HOME}/
+# Set system environment variables
+ENV LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8
+
+USER dev
+
+WORKDIR ${HOME}
+
+ARG NODE_VERSION=node
+ENV INSTALL_VERSION=${NODE_VERSION}
+ENV NVM_DIR=${HOME}/.nvm
 
 # Install nvm
 RUN set -xe; \
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash && \
+  . ${NVM_DIR}/nvm.sh && \
+  nvm install ${INSTALL_VERSION} && \
+  npm install -g \
+    neovim \
+    npm@latest \
+    pyright \
+    typescript \
+    typescript-language-server \
+    vscode-langservers-extracted
 
-# Install Dein
+FROM debian:11-slim
+
+ENV DEBIAN_FRONTEND noninteractive
+
+USER root
+ 
+# Create non-root user
+ARG PUID=1000
+ENV PUID=${PUID}
+ARG PGID=1000
+ENV PGID=${PGID}
+
+# Create user
+RUN groupadd --gid ${PGID} dev && \
+  useradd \
+    --create-home \
+    --home /home/dev \
+    --shell /bin/bash \
+    --uid ${PUID} \
+    --gid dev \
+    dev
+
+# Set timezone
+ARG TZ=UTC
+ENV TZ=${TZ}
+
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
+
+# Install essentials
 RUN set -xe; \
-  mkdir -p ${HOME}/.vim/bundles && \
-  curl -O https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh && \
-  sh ./installer.sh ${HOME}/.vim/bundles && \
-  rm ./installer.sh
+  apt-get update -y && \
+  apt-get install -y \
+    curl \
+    git \
+    ripgrep \
+    zsh && \
+  chsh -s $(which zsh) && \
+  sh -c "$(curl -fsSL https://starship.rs/install.sh)" -y -f
+
+ENV HOME=/home/dev
+ENV ZSH_CUSTOM=${HOME}/.oh-my-zsh/custom
+
+# Set system environment variables
+ENV LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8
+
+RUN set -xe; \
+  curl -OL https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.deb && \
+  apt install ./nvim-linux64.deb && \
+  rm ./nvim-linux64.deb
+
+USER dev
+
+WORKDIR ${HOME}
+
+COPY .zshrc ${HOME}/
+
+RUN mkdir -p ${HOME}/.nvm ${HOME}/.oh-my-zsh
+
+COPY --from=installer ${HOME}/.nvm ${HOME}/.nvm
+COPY --from=installer ${HOME}/.oh-my-zsh ${HOME}/.oh-my-zsh
 
 # Neovim config files
 RUN set -xe; \
-  mkdir -p ${HOME}/.config/nvim/lua
+  mkdir -p ${HOME}/.config/nvim/lua ${HOME}/.vim/bundles
 
 COPY nvim ${HOME}/.config/nvim/
-COPY lua ${HOME}/.config/nvim/lua/
 COPY starship.toml ${HOME}/.config
-
-# Language servers
-RUN export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && \
-  printf %s "${HOME}/.nvm")" && \
-  \. "$NVM_DIR/nvm.sh" && \
-  nvm install node && \
-  npm i -g \
-  neovim \
-  npm@latest \
-  pyright \
-  svelte-language-server \
-  typescript \
-  typescript-language-server \
-  vscode-langservers-extracted
 
 # Powerline fonts
 RUN mkdir -p \

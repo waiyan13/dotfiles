@@ -1,9 +1,3 @@
-# A minimal left prompt
-format = """$character"""
-
-# move the rest of the prompt to the right
-right_format = """$all"""
-
 [aws]
 symbol = "  "
 

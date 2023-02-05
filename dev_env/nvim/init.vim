@@ -51,6 +51,7 @@ call dein#add('hrsh7th/nvim-cmp')
 call dein#add('L3MON4D3/LuaSnip')
 call dein#add('neovim/nvim-lspconfig')
 call dein#add('onsails/lspkind.nvim')
+call dein#add('ray-x/lsp_signature.nvim')
 call dein#add('saadparwaiz1/cmp_luasnip')
 
 " Grep related
@@ -66,6 +67,7 @@ call dein#add('kyazdani42/nvim-web-devicons')
 call dein#add('kyazdani42/nvim-tree.lua')
 
 " Syntax related
+call dein#add('jubnzv/virtual-types.nvim')
 call dein#add('MaxMEllon/vim-jsx-pretty')
 call dein#add('pangloss/vim-javascript')
 call dein#add('plasticboy/vim-markdown')
