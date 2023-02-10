@@ -80,6 +80,7 @@ call dein#add('vim-airline/vim-airline')
 
 " Colorschemes
 call dein#add('ayu-theme/ayu-vim')
+call dein#add('catppuccin/nvim')
 call dein#add('cocopon/iceberg.vim')
 call dein#add('fenetikm/falcon')
 call dein#add('ghifarit53/tokyonight-vim')
@@ -105,7 +106,7 @@ set termguicolors
 set bg=dark
 filetype plugin indent on
 syntax enable
-colorscheme iceberg
+colorscheme catppuccin-mocha
 
 " Custom Mappings
 imap jj <Esc>
