@@ -54,3 +54,4 @@
 - [ ] docker-credential-helpers
 - [ ] nvm
 - [ ] delta
+- [ ] catppuccin
