@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export TERM="xterm-256color"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -72,7 +73,7 @@ zstyle ':omz:update' frequency 7
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(colorize common-aliases docker docker-compose git ssh-agent ubuntu)
+plugins=(colorize common-aliases docker docker-compose git ssh-agent zsh-autosuggestions)
 
 zstyle :omz:plugins:ssh-agent identities github frontiir
 
@@ -104,8 +105,16 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cls="cat /dev/null > ~/.zsh_history && history -c && reset"
+alias cat="bat --paging=never"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
+export PATH="$PATH:/home/waiyan/.local/bin"
+
+export XDG_CONFIG_HOME="${HOME}/.config"
+
+export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
+
 eval "$(starship init zsh)"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

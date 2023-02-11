@@ -1,26 +1,56 @@
 # To Install
 
 - [ ] System update
-- [ ] flatpak
+- [ ] sudo
+- [ ] Xorg server
+- [ ] Network Manager
+- [ ] network-manager-applet
+- [ ] grub
+- [ ] efibootmgr
+- [ ] Microcode (Intel or AMD)
+- [ ] Graphics Drivers
+- [ ] udisk
+- [ ] iw
+- [ ] lshw
+- [ ] pass
+- [ ] xdg-user-dirs
+- [ ] Pulse Audio (ALSA, Bluetooth)
+- [ ] alsa-plugins
+- [ ] alsa-utils
+- [ ] pavucontrol
+- [ ] bluez
+- [ ] bluez-utils
+- [ ] dhcpcd
+- [ ] Lightdm
+- [ ] Yay
+- [ ] nvim
+- [ ] Zsh
+- [ ] git
+- [ ] Setup SSH
+- [ ] Kitty
+- [ ] i3
+- [ ] i3blocks
+- [ ] i3locks-color
+- [ ] ImageMagick
+- [ ] feh
+- [ ] betterlockscreen
+- [ ] polybar
+- [ ] rofi
+- [ ] ripgrep
+- [ ] tmux
+- [ ] Noto fonts (base, CJK, Emoji)
 - [ ] Chromium
 - [ ] Firefox
 - [ ] Bitwarden
 - [ ] VSCode
-- [ ] Uninstall Snap applications
-- [ ] Remove Snap
-- [ ] git
-- [ ] nvim
-- [ ] dein
-- [ ] Setup SSH
-- [ ] Kitty
-- [ ] Zsh
 - [ ] Oh My Zsh
+- [ ] bat
 - [ ] Fonts
 - [ ] Starship
 - [ ] Chroma
 - [ ] mkcert
-- [ ] pass
 - [ ] Docker
+- [ ] Docker Compose
 - [ ] docker-credential-helpers
 - [ ] nvm
-- [ ] git-split-diffs
+- [ ] delta

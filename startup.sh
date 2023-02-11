@@ -2,16 +2,16 @@
 dir="/home/waiyan/Projects"
 
 if [ ! -d $dir/$1 ]; then
-  path="$dir/Frontiir/$1"
+  path_dir="$dir/Frontiir/$1"
 else
-  path="$dir/$1"
+  path_dir="$dir/$1"
 fi
 
 docker run \
   -it \
-  --mount type=bind,source=$path,target=/home/dev/app \
+  --mount type=bind,source=$path_dir,target=/home/dev/app \
   --name dev_$1 \
   --network host \
   --hostname $1 \
-  dev_env:latest
-
+  --entrypoint /usr/bin/zsh \
+  dev_env_${2}:latest
