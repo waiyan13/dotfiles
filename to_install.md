@@ -14,9 +14,10 @@
 - [ ] lshw
 - [ ] pass
 - [ ] xdg-user-dirs
-- [ ] Pulse Audio (ALSA, Bluetooth)
-- [ ] alsa-plugins
-- [ ] alsa-utils
+- [ ] PipeWire
+- [ ] WirePlumber
+- [ ] pipewire-audio
+- [ ] pipewire-alsa
 - [ ] pavucontrol
 - [ ] bluez
 - [ ] bluez-utils
