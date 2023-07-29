@@ -43,7 +43,7 @@
 - [ ] Chromium
 - [ ] Firefox
 - [ ] Bitwarden
-- [ ] VSCode
+- [ ] Codium
 - [ ] Oh My Zsh
 - [ ] bat
 - [ ] Fonts
@@ -53,6 +53,6 @@
 - [ ] Docker
 - [ ] Docker Compose
 - [ ] docker-credential-helpers
-- [ ] nvm
+- [ ] fnm
 - [ ] delta
 - [ ] catppuccin
