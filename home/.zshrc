@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export TERM="xterm-256color"
 
 # Path to your oh-my-zsh installation.
@@ -107,14 +107,8 @@ fi
 alias cls="cat /dev/null > ~/.zsh_history && history -c && reset"
 alias cat="bat --paging=never"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
-export PATH="$PATH:/home/waiyan/.local/bin"
-
 export XDG_CONFIG_HOME="${HOME}/.config"
 
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 
 eval "$(starship init zsh)"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
