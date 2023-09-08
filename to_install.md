@@ -46,13 +46,13 @@
 - [ ] Codium
 - [ ] Oh My Zsh
 - [ ] bat
-- [ ] Fonts
+- [ ] fonts
 - [ ] Starship
 - [ ] Chroma
 - [ ] mkcert
 - [ ] Docker
 - [ ] Docker Compose
 - [ ] docker-credential-helpers
-- [ ] fnm
+- [ ] rtx
 - [ ] delta
 - [ ] catppuccin
