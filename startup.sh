@@ -1,17 +1,12 @@
 #!/usr/bin/zsh
-dir="/home/waiyan/Projects"
-
-if [ ! -d $dir/$1 ]; then
-  path_dir="$dir/Frontiir/$1"
-else
-  path_dir="$dir/$1"
-fi
+dir="/home/waiyan13/Projects"
 
 docker run \
   -it \
-  --mount type=bind,source=$path_dir,target=/home/dev/app \
+  --mount type=bind,source=$dir,target=/home/dev/Projects \
   --name dev_$1 \
-  --network host \
+  --network dockerize_dockerize_network \
   --hostname $1 \
   --entrypoint /usr/bin/zsh \
+  --expose 0.0.0.0:9000:9000/tcp \
   dev_env_${2}:latest
