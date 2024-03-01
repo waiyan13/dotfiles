@@ -25,7 +25,7 @@
 - [ ] Lightdm
 - [ ] Yay
 - [ ] nvim
-- [ ] Zsh
+- [ ] Fish
 - [ ] git
 - [ ] Setup SSH
 - [ ] Kitty
@@ -38,13 +38,12 @@
 - [ ] polybar
 - [ ] rofi
 - [ ] ripgrep
-- [ ] tmux
+- [ ] Zellij
 - [ ] Noto fonts (base, CJK, Emoji)
-- [ ] Chromium
+- [ ] Brave
 - [ ] Firefox
 - [ ] Bitwarden
 - [ ] Codium
-- [ ] Oh My Zsh
 - [ ] bat
 - [ ] fonts
 - [ ] Starship
@@ -53,6 +52,6 @@
 - [ ] Docker
 - [ ] Docker Compose
 - [ ] docker-credential-helpers
-- [ ] rtx
+- [ ] mise
 - [ ] delta
 - [ ] catppuccin
