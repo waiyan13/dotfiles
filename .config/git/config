@@ -15,8 +15,23 @@
 
 [core]
 	editor = nvim
+	pager = delta
+
+[include]
+	path = /PATH/TO/DELTA/THEMES/theme.gitconfig
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	dark = true
+	features = catppuccin-mocha
+	side-by-side = true
+
 [user]
 	email = zaw.waiyan.lwin96@gmail.com
 	name = Zaw W. Lwin
+
 [init]
 	defaultBranch = main
