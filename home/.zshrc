@@ -4,6 +4,7 @@ export TERM="xterm-256color"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM=$ZSH/custom
 
 ZSH_COLORIZE_TOOL=chroma
 
@@ -75,7 +76,7 @@ zstyle ':omz:update' frequency 7
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(colorize common-aliases docker docker-compose git ssh-agent zsh-autosuggestions)
 
-zstyle :omz:plugins:ssh-agent identities github frontiir
+zstyle :omz:plugins:ssh-agent identities github
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,11 +105,15 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ls="exa --long --all"
 alias cls="cat /dev/null > ~/.zsh_history && history -c && reset"
 alias cat="bat --paging=never"
+alias nvim="/opt/nvim/nvim.appimage --appimage-extract-and-run"
 
 export XDG_CONFIG_HOME="${HOME}/.config"
 
 export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 
+eval "$(zellij setup --generate-auto-start zsh)"
 eval "$(starship init zsh)"
+eval "$(~/.local/bin/mise activate zsh)"
