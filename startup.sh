@@ -8,5 +8,5 @@ docker run \
   --network dockerize_nw_network \
   --hostname $1 \
   --entrypoint /usr/bin/zsh \
-  -p 3030:3030/tcp \
+  -p ${3}:${3}/tcp \
   dev_env_${2}:latest
