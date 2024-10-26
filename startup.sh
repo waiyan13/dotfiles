@@ -1,12 +1,12 @@
 #!/usr/bin/zsh
-dir="/home/waiyan13/Projects"
+dir="/home/waiyan/Projects"
 
 docker run \
   -it \
   --mount type=bind,source=$dir,target=/home/dev/Projects \
   --name dev_$1 \
-  --network dockerize_dockerize_network \
+  --network dockerize_nw_network \
   --hostname $1 \
   --entrypoint /usr/bin/zsh \
-  --expose 0.0.0.0:9000:9000/tcp \
+  -p 3030:3030/tcp \
   dev_env_${2}:latest
