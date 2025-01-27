@@ -59,15 +59,16 @@ return {
             --]]
 
             --[[
-            require("dap-python").setup()
+            local py_path = "" -- Python venv path
+            require("dap-python").setup(py_path)
             
             table.insert(dap.configurations.python, {
                 type = "python",
                 request = "launch",
-                name = "",
-                module = "",
-                args = {},
-                cwd = "",
+                name = "", -- config name
+                module = "", -- ASGI server
+                args = {}, -- ASGI server options
+                cwd = "${workspaceFolder}",
             })
             --]]
 
