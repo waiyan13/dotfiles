@@ -11,6 +11,10 @@ return {
         config = function()
             local lsp = require("lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+            }
 
             -- Use an on_attach function to only map the following keys
             -- after the language server attaches to the current buffer
