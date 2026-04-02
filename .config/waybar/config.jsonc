@@ -1,0 +1,56 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 32,
+
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": [],
+  "modules-right": [
+    "pulseaudio",
+    "network",
+    "battery",
+    "clock",
+    "tray",
+    "custom/power",
+  ],
+
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "on-click": "activate",
+    "sort-by-number": true,
+  },
+
+  "clock": {
+    "format": "{:%I:%M %p}",
+    "tooltip-format": "{:%A, %d %B %Y}",
+  },
+
+  "pulseaudio": {
+    "format": " {volume}%",
+    "format-muted": "",
+    "on-click": "pavucontrol",
+  },
+
+  "network": {
+    "format-wifi": "  {essid} ({signalStrength}%)",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰖪",
+  },
+
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-charging": " {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+  },
+
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10,
+  },
+
+  "custom/power": {
+    "format": "⏻",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/power-menu.sh",
+  },
+}
