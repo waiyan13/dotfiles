@@ -2,6 +2,8 @@ function docker-run
     set projects_dir $HOME/Projects
 
     set -l opts \
+        'b/label=' \
+        'i/ip=' \
         'o/org=' \
         'l/lang=' \
         'n/network=' \
@@ -25,6 +27,8 @@ function docker-run
         --mount type=bind,source=$projects_dir,target=/home/dev/Projects \
         --name dev_{$_flag_org}_{$_flag_project}_{$_flag_lang}_{$_flag_version} \
         --network $_flag_network \
+        --ip $_flag_ip \
+        --label $_flag_label \
         --entrypoint /usr/bin/zsh \
         --publish $_flag_port:$_flag_port/tcp \
         dev_env_{$_flag_lang}_{$_flag_version}:latest
