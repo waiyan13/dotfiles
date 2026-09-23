@@ -1,0 +1,159 @@
+# Catppuccin Latte — K9s skin
+# Palette: https://catppuccin.com/palette  ·  Schema: https://k9scli.io/topics/skins/
+#
+# Activate with, in ~/.config/k9s/config.yaml:
+#   k9s:
+#     ui:
+#       skin: catppuccin-latte
+#
+# Latte palette reference (name -> hex):
+#   rosewater #dc8a78   flamingo #dd7878   pink #ea76cb   mauve  #8839ef
+#   red       #d20f39   maroon   #e64553   peach #fe640b  yellow #df8e1d
+#   green     #40a02b   teal     #179299   sky   #04a5e5   sapphire #209fb5
+#   blue      #1e66f5   lavender #7287fd
+#   text #4c4f69  subtext1 #5c5f77  subtext0 #6c6f85
+#   overlay2 #7c7f93  overlay1 #8c8fa1  overlay0 #9ca0b0
+#   surface2 #acb0be  surface1 #bcc0cc  surface0 #ccd0da
+#   base #eff1f5  mantle #e6e9ef  crust #dce0e8
+
+k9s:
+  # General body / app chrome.
+  body:
+    fgColor: '#4c4f69'        # text
+    bgColor: '#eff1f5'        # base
+    logoColor: '#8839ef'      # mauve
+    logoColorMsg: '#1e66f5'   # blue   — neutral logo flash
+    logoColorInfo: '#40a02b'  # green
+    logoColorWarn: '#fe640b'  # peach
+    logoColorError: '#d20f39' # red
+
+  # Command / filter prompt (the ':' and '/' bars).
+  prompt:
+    fgColor: '#4c4f69'        # text
+    bgColor: '#e6e9ef'        # mantle
+    suggestColor: '#1e66f5'   # blue   — inline autocompletion hint
+    border:
+      command: '#04a5e5'      # sky    — ':' command mode
+      default: '#40a02b'      # green  — '/' filter mode
+
+  # The '?' help view.
+  help:
+    fgColor: '#4c4f69'        # text
+    bgColor: '#eff1f5'        # base
+    sectionColor: '#40a02b'   # green
+    keyColor: '#1e66f5'       # blue
+    numKeyColor: '#e64553'    # maroon
+
+  # Window frame: titles, borders, menu, breadcrumbs, resource status.
+  frame:
+    title:
+      fgColor: '#179299'      # teal
+      bgColor: '#eff1f5'      # base
+      highlightColor: '#ea76cb' # pink — active/selected item count
+      counterColor: '#df8e1d'   # yellow
+      filterColor: '#40a02b'    # green
+    border:
+      fgColor: '#8839ef'      # mauve
+      focusColor: '#7287fd'   # lavender — focused pane border
+    menu:
+      fgColor: '#4c4f69'      # text
+      keyColor: '#1e66f5'     # blue   — mnemonic keys (<a>, <d>, ...)
+      numKeyColor: '#e64553'  # maroon — numbered shortcuts
+    crumbs:
+      fgColor: '#eff1f5'      # base   — label sits on a colored chip
+      bgColor: '#acb0be'      # surface2 — inactive breadcrumb chip
+      activeColor: '#1e66f5'  # blue   — current view chip
+    status:
+      newColor: '#1e66f5'       # blue
+      modifyColor: '#7287fd'    # lavender
+      addColor: '#40a02b'       # green
+      pendingColor: '#fe640b'   # peach
+      errorColor: '#d20f39'     # red
+      highlightColor: '#04a5e5' # sky
+      killColor: '#8839ef'      # mauve
+      completedColor: '#9ca0b0' # overlay0 — dimmed / done
+
+  # Cluster info panel (top-left key/value block).
+  info:
+    fgColor: '#fe640b'        # peach  — values
+    sectionColor: '#4c4f69'   # text   — labels
+    cpuColor: '#40a02b'       # green
+    memColor: '#04a5e5'       # sky
+    k9sRevColor: '#8839ef'    # mauve
+
+  # Per-view styling.
+  views:
+    # Resource tables (pods, deployments, ...).
+    table:
+      fgColor: '#4c4f69'        # text
+      bgColor: '#eff1f5'        # base
+      cursorFgColor: '#4c4f69'  # text   — selected row keeps dark text
+      cursorBgColor: '#bcc0cc'  # surface1 — on a subtle gray highlight
+      markColor: '#dc8a78'      # rosewater — marked (spacebar) rows
+      header:
+        fgColor: '#df8e1d'                  # yellow
+        bgColor: '#eff1f5'                  # base
+        sorterColor: '#04a5e5'              # sky — sort arrow
+        selectedSortColumnColor: '#ea76cb'  # pink — active sort column
+
+    # Xray dependency tree.
+    xray:
+      fgColor: '#4c4f69'        # text
+      bgColor: '#eff1f5'        # base
+      cursorColor: '#bcc0cc'    # surface1
+      cursorTextColor: '#4c4f69' # text
+      graphicColor: '#ea76cb'   # pink — tree glyphs
+
+    # Pulses / gauges dashboards.
+    charts:
+      bgColor: '#eff1f5'        # base
+      chartBgColor: '#eff1f5'   # base
+      dialBgColor: '#eff1f5'    # base
+      focusFgColor: '#eff1f5'   # base    — focused gauge label
+      focusBgColor: '#7287fd'   # lavender
+      defaultDialColors:        # [ ok, error ]
+        - '#40a02b'             # green
+        - '#d20f39'             # red
+      defaultChartColors:       # [ ok, error ]
+        - '#40a02b'             # green
+        - '#d20f39'             # red
+      resourceColors:
+        cpu:
+          - '#8839ef'           # mauve
+          - '#1e66f5'           # blue
+        mem:
+          - '#df8e1d'           # yellow
+          - '#fe640b'           # peach
+
+    # YAML / describe view.
+    yaml:
+      keyColor: '#1e66f5'       # blue
+      valueColor: '#4c4f69'     # text
+      colonColor: '#6c6f85'     # subtext0
+
+    # Log viewer.
+    logs:
+      fgColor: '#4c4f69'        # text
+      bgColor: '#eff1f5'        # base
+      indicator:
+        fgColor: '#7287fd'          # lavender
+        bgColor: '#eff1f5'          # base
+        toggleOnColor: '#40a02b'    # green
+        toggleOffColor: '#6c6f85'   # subtext0
+
+    # Context / resource picker list.
+    picker:
+      mainColor: '#4c4f69'      # text
+      focusColor: '#1e66f5'     # blue
+      shortcutColor: '#fe640b'  # peach
+
+  # Modal dialogs (delete, scale, port-forward, ...).
+  dialog:
+    fgColor: '#4c4f69'          # text
+    bgColor: '#e6e9ef'          # mantle
+    buttonFgColor: '#4c4f69'    # text
+    buttonBgColor: '#bcc0cc'    # surface1 — unfocused button
+    buttonFocusFgColor: '#eff1f5' # base
+    buttonFocusBgColor: '#1e66f5' # blue   — focused button
+    labelFgColor: '#e64553'     # maroon  — field labels
+    fieldFgColor: '#4c4f69'     # text    — field input
