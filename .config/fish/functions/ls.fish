@@ -1,3 +1,7 @@
-function ls --wraps='eza -al --color=always --group-directories-first --icons' --wraps='eza --icons=auto' --description 'alias ls=eza --icons=auto'
-    eza --icons=auto $argv
+function ls --wraps='eza --icons=auto' --description 'alias ls=eza --icons=auto'
+    if type -q eza
+        eza --icons=auto $argv
+    else
+        command ls $argv
+    end
 end

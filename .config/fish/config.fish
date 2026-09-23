@@ -1,17 +1,33 @@
-source /usr/share/cachyos-fish-config/cachyos-config.fish
+# Shared shell setup. Per-OS bits live in conf.d/10-linux.fish and
+# conf.d/10-macos.fish, which fish sources before this file.
 
-set PATH "$PATH:/opt/nvim-linux-x86_64/bin:/opt/google-cloud-sdk/bin:$HOME/.local/bin"
+fish_add_path $HOME/.local/bin
 
-starship init fish | source
-mise activate fish | source
+# starship — prompt
+if type -q starship
+    starship init fish | source
+end
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/opt/google-cloud-sdk/path.fish.inc' ]; . '/opt/google-cloud-sdk/path.fish.inc'; end
+# mise — runtimes, per-project tool versions, env and tasks
+if type -q mise
+    if status is-interactive
+        mise activate fish | source
+    else
+        mise activate fish --shims | source
+    end
+end
 
-direnv hook fish | source
+# direnv — per-directory env
+if type -q direnv
+    direnv hook fish | source
+end
 
 # opencode
-fish_add_path $HOME/.opencode/bin
+if test -d $HOME/.opencode/bin
+    fish_add_path $HOME/.opencode/bin
+end
 
 # Added by the Hunk installer (https://hunk.dev)
-fish_add_path $HOME/.hunk/bin
+if test -d $HOME/.hunk/bin
+    fish_add_path $HOME/.hunk/bin
+end
