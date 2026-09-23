@@ -1,0 +1,5 @@
+[tools]
+ast-grep = "latest"
+go = "1.26.6"
+node = "24.19.0"
+rust = "1.97.1"
