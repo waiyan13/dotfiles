@@ -8,25 +8,28 @@
   rs = restore
   lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-  lg = !"git lg1"
+  # Current branch, every commit, no --all (avoids the merge-based env-branch cascade)
+  lgc = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+  # Default: first-parent release/merge overview of the CURRENT branch (cascade-free). Append --all for all branches.
+  lg = log --graph --abbrev-commit --decorate --first-parent --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
 
 [commit]
   template=~/.config/git/message
 
 [core]
-  editor = vim
+  editor = nvim
   pager = delta
 
 [include]
-  path = /PATH/TO/DELTA/THEMES/theme.gitconfig
+  path = ~/.config/delta/themes/theme.gitconfig
 
 [interactive]
   diffFilter = delta --color-only
 
 [delta]
   navigate = true
-  dark = true
-  features = catppuccin-mocha
+  dark = false
+  features = catppuccin-latte
   side-by-side = true
 
 [user]
@@ -35,3 +38,12 @@
 
 [init]
   defaultBranch = main
+
+# The empty helper clears helpers from other config files. gh then gives the token.
+[credential "https://github.com"]
+  helper =
+  helper = !gh auth git-credential
+
+[credential "https://gist.github.com"]
+  helper =
+  helper = !gh auth git-credential
