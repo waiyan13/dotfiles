@@ -13,6 +13,7 @@ case "$choice" in
     loginctl lock-session
     ;;
   Logout)
-    hyprctl dispatch exit  # change if not using Hyprland
+    # Lua call form. The old `dispatch exit` form fails on a lua config.
+    hyprctl dispatch 'hl.dsp.exit()'  # change if not using Hyprland
     ;;
 esac

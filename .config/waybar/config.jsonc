@@ -14,14 +14,14 @@
     "custom/power",
   ],
 
+  // This module handles its own clicks. It has no "on-click" option.
   "hyprland/workspaces": {
     "format": "{name}",
-    "on-click": "activate",
-    "sort-by-number": true,
+    "sort-by": "number",
   },
 
   "clock": {
-    "format": "{:%I:%M %p}",
+    "format": "{:%H:%M %p}",
     "tooltip-format": "{:%A, %d %B %Y}",
   },
 
