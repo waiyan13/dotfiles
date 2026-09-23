@@ -1,6 +1,7 @@
 # dotfiles
 
-Configs for a CachyOS + Hyprland (Lua config) desktop with the fish shell.
+Configs for a CachyOS + Hyprland (Lua config) desktop and a macOS machine,
+both with the fish shell.
 
 ## Layout
 
@@ -13,21 +14,27 @@ Tools with a config here: bat, delta, fish, ghostty, git, hypr (Hyprland, hyprid
 hyprlock, hyprpaper), k9s (skin only), mise, nvim, rofi, starship, waybar,
 xdg-desktop-portal, and docker.
 
+## Platforms
+
+Most configs work on both machines. The split is handled in two places:
+
+- **Whole configs that only Linux uses** — hypr, rofi, waybar and
+  xdg-desktop-portal are Wayland/Hyprland, so `install.sh` skips them on macOS.
+- **Per-OS shell setup** — `.config/fish/conf.d/10-linux.fish` and
+  `10-macos.fish` guard on `uname`. Fish sources `conf.d/` before `config.fish`,
+  so PATH is set before the shared file runs. `config.fish` itself is shared and
+  guards every tool with `type -q`, so a machine missing a tool still starts.
+
 ## Install on a new machine
 
-1. Copy `.config/` into `~/.config/`:
+1. Run the installer. It copies the shared configs, adds the Linux-only ones on
+   Linux, and copies `home/` into `~/`:
 
    ```sh
-   cp -r .config/. ~/.config/
+   ./install.sh
    ```
 
-2. Copy `home/` into `~/`:
-
-   ```sh
-   cp -r home/. ~/
-   ```
-
-3. Run `gh auth login`. The git config uses `gh` as the credential helper for GitHub.
+2. Run `gh auth login`. The git config uses `gh` as the credential helper for GitHub.
 
 ## Secrets
 
