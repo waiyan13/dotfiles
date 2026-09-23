@@ -1,0 +1,7 @@
+# Local agent and planning state
+.claude/
+tasks/
+
+# Machine-local fish state and secrets
+.config/fish/fish_variables
+.config/fish/conf.d/secrets.fish
