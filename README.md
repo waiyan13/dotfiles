@@ -27,13 +27,7 @@ xdg-desktop-portal, and docker.
    cp -r home/. ~/
    ```
 
-3. Create `~/.config/fish/conf.d/secrets.fish` for the Honeycomb API key:
-
-   ```fish
-   set OTEL_EXPORTER_OTLP_HEADERS "x-honeycomb-team=<api-key>"
-   ```
-
-4. Run `gh auth login`. The git config uses `gh` as the credential helper for GitHub.
+3. Run `gh auth login`. The git config uses `gh` as the credential helper for GitHub.
 
 ## Secrets
 
