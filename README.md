@@ -23,6 +23,10 @@ Most configs work on both machines. The split is handled in two places:
   `home/` is skipped there too: it holds only the docker config, whose
   `credsStore` is `pass`, the Linux password store. macOS uses `osxkeychain`,
   and Docker writes its own context and plugin paths into that file.
+- **macOS preferences** — `macos-defaults.sh` holds the `defaults(1)` writes
+  that have no Linux counterpart: where screenshots go, their drop-shadow, and
+  forcing the Gregorian calendar so a Thai region does not date files in the
+  Buddhist era. `install.sh` runs it on macOS, and it is safe to run twice.
 - **Per-OS ghostty settings** — `config.ghostty` ends with
   `config-file = ?os.conf`, and `install.sh` writes `os.conf` from
   `os-linux.conf` or `os-macos.conf`. An included file loads after the file

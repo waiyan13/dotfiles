@@ -45,3 +45,8 @@ if [ "$os" = Linux ]; then
 else
     echo "skipped (Linux only): $linux_only home/"
 fi
+
+if [ "$os" = Darwin ]; then
+    echo
+    ./macos-defaults.sh
+fi
