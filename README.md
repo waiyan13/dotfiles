@@ -23,6 +23,12 @@ Most configs work on both machines. The split is handled in two places:
   `home/` is skipped there too: it holds only the docker config, whose
   `credsStore` is `pass`, the Linux password store. macOS uses `osxkeychain`,
   and Docker writes its own context and plugin paths into that file.
+- **Per-OS ghostty settings** — `config.ghostty` ends with
+  `config-file = ?os.conf`, and `install.sh` writes `os.conf` from
+  `os-linux.conf` or `os-macos.conf`. An included file loads after the file
+  that includes it, so `os.conf` overrides the shared values. Linux drops the
+  decorations for Hyprland; macOS keeps them, because native fullscreen needs
+  them, and bumps the font size.
 - **Per-OS shell setup** — `.config/fish/conf.d/10-linux.fish` and
   `10-macos.fish` guard on `uname`. Fish sources `conf.d/` before `config.fish`,
   so PATH is set before the shared file runs. `config.fish` itself is shared and
