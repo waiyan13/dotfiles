@@ -24,9 +24,12 @@ if [ "$os" = Linux ]; then
         cp -R ".config/$c" "$HOME/.config/"
         echo "installed .config/$c"
     done
-else
-    echo "skipped (Linux only): $linux_only"
-fi
 
-cp -R home/. "$HOME/"
-echo "installed home/"
+    # home/ holds only .docker/config.json, and its credsStore is pass, the
+    # Linux password store. macOS uses osxkeychain and Docker writes its own
+    # context and plugin paths into that file, so leave it alone there.
+    cp -R home/. "$HOME/"
+    echo "installed home/"
+else
+    echo "skipped (Linux only): $linux_only home/"
+fi
