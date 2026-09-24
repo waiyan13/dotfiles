@@ -1,16 +1,16 @@
 font-family = "MonoLisa"
 font-size = 12
 
-window-decoration = none
 window-padding-x = 8
 window-padding-balance = true
-
-gtk-tabs-location = bottom
-gtk-titlebar-style = native
-gtk-toolbar-style = flat
 
 theme = Catppuccin Latte
 background-opacity = 0.9
 
 keybind = ctrl+g>t=new_tab
 keybind = ctrl+g>r=prompt_tab_title
+
+# Per-OS settings. install.sh writes os.conf from os-linux.conf or
+# os-macos.conf. An included file loads after the file that includes it, so
+# anything in os.conf overrides the values above.
+config-file = ?os.conf

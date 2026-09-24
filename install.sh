@@ -12,12 +12,24 @@ linux_only="hypr rofi waybar xdg-desktop-portal"
 
 os=$(uname)
 
+case "$os" in
+    Linux)  ghostty_os=os-linux.conf  ;;
+    Darwin) ghostty_os=os-macos.conf  ;;
+    *)      ghostty_os=""             ;;
+esac
+
 mkdir -p "$HOME/.config"
 
 for c in $shared; do
     cp -R ".config/$c" "$HOME/.config/"
     echo "installed .config/$c"
 done
+
+# ghostty's config.ghostty includes ?os.conf, which overrides it.
+if [ -n "$ghostty_os" ]; then
+    cp ".config/ghostty/$ghostty_os" "$HOME/.config/ghostty/os.conf"
+    echo "installed .config/ghostty/os.conf from $ghostty_os"
+fi
 
 if [ "$os" = Linux ]; then
     for c in $linux_only; do
